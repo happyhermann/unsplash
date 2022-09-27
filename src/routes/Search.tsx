@@ -5,11 +5,10 @@ import styled from "styled-components";
 
 import { IGetRes } from "./Home";
 import { keyword } from "../atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { Loading } from "../components/Loading";
-
-const ACCESS_KEY = "CbuSOiu8nhicErzCuY4IkeqzuaxkT4RUSMCXhLKsiFo";
-const SEARCH = "https://api.unsplash.com/search/photos?";
+import { useMatch } from "react-router-dom";
+import { Modal } from "../components/Modal";
 
 // to Do
 
@@ -21,62 +20,131 @@ const Keyword = styled.h3`
   padding: 0 30px;
 `;
 
-const List = styled.ul``;
+const List = styled.ul`
+  margin-top: 1rem;
+  /* Prevent vertical gaps */
+  line-height: 0;
+  padding: 30px 60px;
 
-const Photos = styled.li``;
+  @media screen and (max-width: 832px) {
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 1;
+    -moz-column-gap: 0px;
+    column-count: 1;
+    column-gap: 0px;
+  }
+
+  @media screen and (min-width: 833px) and (max-width: 1232px) {
+    --column-gutter: 24px;
+    --columns: 3;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 2;
+    column-gap: 0px;
+  }
+
+  @media screen and (min-width: 1233px) and (max-width: 1632px) {
+    -webkit-column-count: 3;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 3;
+    column-gap: 0px;
+  }
+`;
+
+const Photos = styled.li`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--row-gutter);
+  margin-bottom: 15px;
+`;
 
 const Img = styled.img``;
 
 export default function Search() {
   // random image Interface
   const [loading, setLoading] = useState(true);
+  const searchMatch = useMatch("/photos/:searchId");
+  const searched = useRecoilValue<IGetRes[]>(keyword);
 
-  const [data, setData] = useState<IGetRes[]>([]);
-  const searched = useRecoilValue<string>(keyword);
+  console.log(searchMatch);
+
+  // 모달 재활용 코드
+  const onBoxClick = (searchId: string) => {
+    console.log(searchId);
+  };
+
+  const clickedPhoto =
+    searchMatch?.params.searchId &&
+    searched?.find((searched) => searched.id === searchMatch.params.searchId);
 
   // const axios = require("axios");
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(SEARCH, {
-        params: {
-          page: 1,
-          query: searched,
-        },
-        headers: {
-          Authorization: `Client-ID ${ACCESS_KEY}`,
-        },
-        timeout: 2000,
-      })
-      .then((res: any) => {
-        setData(res.data);
-        setLoading(false);
-      })
-      .catch((err: any) => {
-        console.log("error");
-      });
+  console.log(searched.length);
 
-    console.log(data);
-  }, [searched]);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 800);
+  });
 
   return (
     <>
-      {" "}
-      {loading ? (
-        <Loading />
-      ) : (
-        <Wrapper>
-          <Keyword>{searched.toUpperCase()}</Keyword>
+      <Wrapper>
+        {/* <Keyword>{searched.toUpperCase()}</Keyword> */}
+
+        {loading ? (
+          <Loading />
+        ) : (
           <List>
-            {/* {data.map((datas: IGetRes) => (
-              <Photos key={datas.id}>
-                <Img src={datas.urls.small} alt="searched img" />
-              </Photos>
-            ))} */}
+            {searched.length === 0 ? (
+              <div
+                className="error_box"
+                style={{ margin: "0 auto", width: "100%" }}
+              >
+                <h3 style={{ fontSize: "30px", fontWeight: 600 }}>
+                  Any photos can't be found
+                </h3>
+                <img
+                  className="error_img"
+                  src="https://unsplash.com/a/img/empty-states/photos.png"
+                  alt="empty"
+                />
+              </div>
+            ) : (
+              <>
+                {searched.map((photo: IGetRes) => (
+                  <Photos
+                    onClick={() => {
+                      onBoxClick(photo.id);
+                    }}
+                    key={photo.id}
+                  >
+                    <Img src={photo.urls.small} alt="searched photo" />
+                  </Photos>
+                ))}
+              </>
+            )}
+
+            {/* {searched.map((photo: IGetRes) => (
+          <Photos
+            onClick={() => {
+              onBoxClick(photo.id);
+            }}
+            key={photo.id}
+          >
+            <Img src={photo.urls.small} alt="searched photo" />
+          </Photos>
+        ))} */}
           </List>
-        </Wrapper>
-      )}
+        )}
+
+        {searchMatch ? <Modal clickedPhoto={clickedPhoto} /> : null}
+      </Wrapper>
     </>
   );
 }
