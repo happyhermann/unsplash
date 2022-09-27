@@ -4,22 +4,59 @@ import axios from "axios";
 
 import styled from "styled-components";
 import Banner from "../components/Banner";
-import { useNavigate, useMatch, useParams } from "react-router-dom";
+import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
+import { Loading } from "../components/Loading";
 
-const ACCESS_KEY = "CbuSOiu8nhicErzCuY4IkeqzuaxkT4RUSMCXhLKsiFo";
-const RANDOM_PHOTO_URL = `https://api.unsplash.com/photos/?client_id=${ACCESS_KEY}`;
+const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
+const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section``;
 
 const PictureList = styled.article`
+  margin-top: 1rem;
+  /* Prevent vertical gaps */
+  line-height: 0;
   padding: 30px 60px;
+
+  @media screen and (max-width: 832px) {
+    -webkit-column-count: 1;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 1;
+    -moz-column-gap: 0px;
+    column-count: 1;
+    column-gap: 0px;
+  }
+
+  @media screen and (min-width: 833px) and (max-width: 1232px) {
+    --column-gutter: 24px;
+    --columns: 3;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 2;
+    column-gap: 0px;
+  }
+
+  @media screen and (min-width: 1233px) and (max-width: 1632px) {
+    -webkit-column-count: 3;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 3;
+    column-gap: 0px;
+  }
 `;
 
 const Picture = styled.li`
   img {
     cursor: zoom-in;
   }
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--row-gutter);
+  margin-bottom: 15px;
 `;
 
 export interface IGetRes {
@@ -51,18 +88,35 @@ export interface IGetRes {
 export default function Home() {
   // random image Interface
   const navigate = useNavigate();
-  const photoMatch = useMatch("/photos/:photoId");
+  const photoMatch = useMatch("/search/:photoId");
   // useMatch의 인자로 url로 넘기면 해당 url과 일치하는 경우 url 정보 반환
   // 아닐시 null을 반환
 
   // => 이 특성을 이용해서 modal창 띄우는 toggle로 사용하기?
 
   // console.log(photoMatch);
-
-  const [img, setImg] = useState("");
+  const [load, setLoad] = useState(true);
   const [res, setRes] = useState<IGetRes[]>([]);
 
   const axios = require("axios");
+
+  useEffect(() => {
+    axios
+      .get(RANDOM_PHOTO_URL, {
+        params: {
+          count: 30,
+        },
+        headers: {
+          Authorization: `Client-ID ${ACCESS_KEY}`,
+        },
+      })
+      .then((res: any) => {
+        setRes(res.data);
+      })
+      .catch((err: any) => {
+        console.log("error");
+      });
+  }, []);
 
   const onBoxClick = (photoId: string) => {
     console.log(photoId);
@@ -81,19 +135,6 @@ export default function Home() {
 
   console.log(clickedPhoto);
 
-  useEffect(() => {
-    axios
-      .get(RANDOM_PHOTO_URL)
-      .then((res: any) => {
-        setRes(res.data);
-      })
-      .catch((err: any) => {
-        console.log("error");
-      });
-  }, [axios]);
-
-  console.log(res);
-
   return (
     <>
       <HomeContainer>
@@ -102,7 +143,7 @@ export default function Home() {
           <div>
             {res.map((data: IGetRes) => (
               <Picture onClick={() => onBoxClick(data.id)} key={data.id}>
-                <img className="picture" src={data.urls.small} alt="picture" />
+                <img className="picture" src={data.urls.small} alt="pic img" />
               </Picture>
             ))}
           </div>
