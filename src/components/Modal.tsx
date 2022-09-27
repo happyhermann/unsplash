@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import "remixicon/fonts/remixicon.css";
 
 import { IGetRes } from "../routes/Home";
 
@@ -12,7 +13,6 @@ const ModalBackGround = styled.div`
   right: 0;
   top: 0;
   z-index: 5;
-  backface-visibility: hidden;
   overflow: auto;
 `;
 
@@ -66,11 +66,54 @@ const Body = styled.article`
   margin-top: 30px;
 `;
 
-const Detail = styled.div``;
+const Detail = styled.div`
+  display: grid;
+  gap: 24px;
+  padding: 30px;
+
+  grid-template:
+    "stats featuredIn actions" auto
+    "details description description" 1fr / fit-content(400px) 1fr auto;
+
+  h3 {
+    color: #767676;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .Buttons {
+    display: flex;
+
+    span {
+      margin-right: 15px;
+      background-color: #fff;
+    }
+  }
+
+  .Photo_details_box {
+    display: flex;
+    margin-bottom: 10px;
+
+    i {
+      font-size: 15px;
+    }
+
+    span {
+      opacity: 0.5;
+      margin-left: 10px;
+      font-weight: 400;
+    }
+  }
+`;
 
 // 재활용 가능하게 하려면?
 export const Modal = ({ clickedPhoto }: any) => {
   const navigate = useNavigate();
+
+  const updated = clickedPhoto.user.updated_at.slice(0, 10);
+  // 업로드 날짜 데이터
+
+  console.log(updated);
 
   return (
     <>
@@ -86,7 +129,13 @@ export const Modal = ({ clickedPhoto }: any) => {
               />{" "}
               <div className="uploader_details">
                 <h3 className="uploader_name">{clickedPhoto.user.name}</h3>
-                <p className="hire">Available for hire</p>
+
+                {clickedPhoto.user.for_hire == true ? (
+                  <p className="hire">Available for hire</p>
+                ) : (
+                  <div className="hire">hired</div>
+                )}
+                {/* 고용여부에 따른 문구 달리 띄우기  */}
               </div>
             </div>
             <div
@@ -107,7 +156,40 @@ export const Modal = ({ clickedPhoto }: any) => {
               />
             </div>
           </Body>
-          <Detail></Detail>
+          <Detail>
+            <div className="views">
+              <div>
+                <h3>Views</h3>
+                <span>{clickedPhoto.height}</span>
+              </div>
+            </div>
+            <div className="Likes">
+              <div>
+                <h3>Download</h3>
+                <span>{clickedPhoto.user.total_photos}</span>
+              </div>
+            </div>
+            <div className="Likes">
+              <div>
+                <h3>Likes</h3>
+                <span>{clickedPhoto.user.total_likes}</span>
+              </div>
+            </div>
+            <div className="Photo_details">
+              <span className="Photo_details_box">
+                <i className="ri-calendar-line"></i>
+                <span>Uploaded {updated}</span>
+              </span>
+              <span className="Photo_details_box">
+                <i className="ri-camera-2-line"></i>
+                <span>Canon, EOS 100D</span>
+              </span>
+              <span className="Photo_details_box">
+                <i className="ri-shield-cross-line"></i>
+                <span>Free to use under the Unsplash License</span>
+              </span>
+            </div>
+          </Detail>
         </ModalBox>
       </ModalBackGround>
     </>
