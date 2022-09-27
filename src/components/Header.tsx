@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import "remixicon/fonts/remixicon.css";
+import { useRecoilState } from "recoil";
+import { keyword } from "../atom";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.header`
   position: sticky;
   top: 0;
   z-index: 4;
   padding: 10px;
+  background-color: white;
 `;
 
 const Nav = styled.nav`
@@ -157,7 +161,7 @@ const CategoryNav = styled.nav`
   }
 `;
 
-const SliderUl = styled.ul``;
+// const SliderUl = styled.ul``;
 
 const Divider = styled.div`
   background-color: #d1d1d1;
@@ -166,22 +170,38 @@ const Divider = styled.div`
 `;
 
 export default function Header() {
+  const navigate = useNavigate();
+  const [searched, setSearch] = useRecoilState(keyword);
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    setSearch(e.currentTarget.search.value);
+    navigate(`/search/${searched}`);
+  };
+
   return (
     <Wrapper>
       <Nav>
         <div className="logo_box">
           <img
+            onClick={() => {
+              navigate("/");
+            }}
             src="https://images.squarespace-cdn.com/content/v1/54a5505fe4b0d132f64e0e9b/1602764573163-4U5NX0PCFMOJCFSZQKFV/Unsplash-logo-4x3.png"
             alt="Logo"
           />
         </div>
         <div className="form_box">
-          <Form>
+          <Form onSubmit={onSubmit}>
             <div className="form_icon">
               <i className="ri-search-line"></i>
             </div>
             <div className="search_box">
-              <SearchBar placeholder="Search photos" />
+              <SearchBar
+                name="search"
+                type="text"
+                placeholder="Search photos"
+              />
             </div>
           </Form>
         </div>
@@ -198,7 +218,7 @@ export default function Header() {
           <div className="profile_box">
             <img
               className="profile_img"
-              src="https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png"
+              src="https://illumesense.com/resources/illumesense/style/img/website/profile-picture-blanks/male-profile.jpg"
               alt="user profile"
             />
           </div>

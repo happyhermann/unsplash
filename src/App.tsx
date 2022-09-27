@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 
 import Router from "./routes/Router";
 
+// unplash api key
+
 const GlobalStyle = createGlobalStyle`
   
   button {
