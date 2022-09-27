@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import "remixicon/fonts/remixicon.css";
+import axios from "axios";
+
 import { useRecoilState } from "recoil";
+import { Loading } from "./Loading";
+import { IGetRes } from "../routes/Home";
 import { keyword } from "../atom";
-import { useNavigate } from "react-router-dom";
+
+const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
+const SEARCH = "https://api.unsplash.com/search/photos?";
 
 const Wrapper = styled.header`
   position: sticky;
@@ -171,12 +178,39 @@ const Divider = styled.div`
 
 export default function Header() {
   const navigate = useNavigate();
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(true);
   const [searched, setSearch] = useRecoilState(keyword);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(SEARCH, {
+        params: {
+          page: 1,
+          query: input,
+        },
+        headers: {
+          Authorization: `Client-ID ${ACCESS_KEY}`,
+        },
+        timeout: 2000,
+      })
+      .then((res: any) => {
+        setLoading(true);
+        setSearch(res.data.results);
+        navigate(`/search/${input}`);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        console.log("error");
+      });
+  }, [input]);
+
+  console.log(searched);
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    setSearch(e.currentTarget.search.value);
-    navigate(`/search/${searched}`);
+    setInput(e.currentTarget.search.value);
   };
 
   return (
