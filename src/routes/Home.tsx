@@ -22,6 +22,7 @@ const PictureList = styled.ul`
   line-height: 0;
   padding: 30px 60px;
   margin: 0 auto;
+  padding-bottom: 100px;
 
   @media screen and (max-width: 832px) {
     -webkit-column-count: 1;
@@ -130,6 +131,7 @@ export default function Home() {
   const axios = require("axios");
 
   const fetch = useCallback(async () => {
+    setLoad(true); // 로딩 시작
     axios
       .get(RANDOM_PHOTO_URL, {
         params: {
@@ -155,7 +157,10 @@ export default function Home() {
       .catch((err: any) => {
         console.log("error");
       });
-  }, []);
+    setLoad(false); //로딩 종료
+  }, [posts]);
+
+  console.log(load);
 
   // 다 잘되는데 이슈가 UseEffect를 axios를 호출 할때를 dependency에 넣어줘야하는데 axios를 변수에 집어넣어야함
 
@@ -197,6 +202,8 @@ export default function Home() {
       <HomeContainer>
         <Banner />
         <PictureList>
+          {}
+
           <div>
             {posts.map((data: IGetRes, index: number) => (
               <Picture onClick={() => onBoxClick(data.id)} key={data.id}>
@@ -205,6 +212,7 @@ export default function Home() {
               </Picture>
             ))}
           </div>
+          {load && <Loading />}
         </PictureList>
         {photoMatch ? <Modal clickedPhoto={clickedPhoto} /> : null}
         <div ref={observerTargetEl} />

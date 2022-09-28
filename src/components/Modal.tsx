@@ -81,7 +81,7 @@ const Detail = styled.div`
     font-size: 20px;
     margin-bottom: 20px;
   }
-  font-size: 2px;
+  font-size: 16px;
 
   .Buttons {
     display: flex;
