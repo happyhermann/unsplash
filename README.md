@@ -54,6 +54,9 @@
 <hr/>
 
 #### 홈화면 / 랜덤 사진 갤러리 리스트 
+
+<img src="/static/media/unsplash.273d0dacda3214e2ecd4.png" width="600px" height="400px" alt="carousel" />
+
   > 사용 API : https://api.unsplash.com/photos/random
   > Home 페이지에 접근시 (mount될 때 : useEffect 사용) 랜덤 사진 데이터를 불러오는 Unsplash Random Photo API Get으로 통신하여 useState로 데이터 set
   > 사진 리스트는 별도의 오픈 소스 없이 display : grid를 사용하여 랜덤 
