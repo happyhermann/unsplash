@@ -46,7 +46,16 @@ const List = styled.ul`
     column-gap: 0px;
   }
 
-  @media screen and (min-width: 1233px) and (max-width: 1632px) {
+  @media screen and (min-width: 1233px) and (max-width: 1800px) {
+    -webkit-column-count: 3;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 3;
+    column-gap: 0px;
+  }
+
+  @media screen and (min-width: 1810px) and (max-width: 2600px) {
     -webkit-column-count: 3;
     -webkit-column-gap: 0px;
     -moz-column-count: 2;

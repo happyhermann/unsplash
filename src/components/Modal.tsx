@@ -64,6 +64,7 @@ const Body = styled.article`
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  margin-bottom: 30px;
 `;
 
 const Detail = styled.div`
@@ -77,9 +78,10 @@ const Detail = styled.div`
 
   h3 {
     color: #767676;
-    font-size: 16px;
-    margin-bottom: 15px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
+  font-size: 23px;
 
   .Buttons {
     display: flex;
@@ -95,10 +97,11 @@ const Detail = styled.div`
     margin-bottom: 10px;
 
     i {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     span {
+      font-size: 20px;
       opacity: 0.5;
       margin-left: 10px;
       font-weight: 400;
