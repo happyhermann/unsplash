@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 
@@ -93,34 +93,81 @@ export default function Home() {
   // random image Interface
   const navigate = useNavigate();
   const photoMatch = useMatch("/photos/:photoId");
+  const [load, setLoad] = useState(false);
+
   // useMatch의 인자로 url로 넘기면 해당 url과 일치하는 경우 url 정보 반환
   // 아닐시 null을 반환
 
   // => 이 특성을 이용해서 modal창 띄우는 toggle로 사용하기?
 
   // console.log(photoMatch);
-  const [load, setLoad] = useState(true);
+
+  // infinity scroll
+
+  const observerTargetEl = useRef<HTMLDivElement>(null);
+
+  const [posts, setPosts] = useState<IGetRes[]>([]);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const page = useRef<number>(1);
+
+  // useRef? page를 state로 관리하지 않는 이유? : state로 관리하면 리렌더링으로 인해 서버측에 요청이 여러번 감
+
+  console.log(observerTargetEl);
+  console.log(hasNextPage);
+  console.log(page);
+  // get random data
   const [res, setRes] = useState<IGetRes[]>([]);
 
   const axios = require("axios");
 
-  useEffect(() => {
+  const fetch = useCallback(async () => {
     axios
       .get(RANDOM_PHOTO_URL, {
         params: {
-          count: 30,
+          count: 10,
         },
         headers: {
           Authorization: `Client-ID ${ACCESS_KEY}`,
         },
+        page: page,
       })
       .then((res: any) => {
         setRes(res.data);
+        setPosts((prevPosts) => [...prevPosts, ...res.data]);
+        setHasNextPage(res.data.length === 10);
+        // 다음 페이지 존재하는지 체크하기 위해 hasNextPage 추가
+        // 1~10, 11~20 10개를 가져오면 계속 true, 만약에 10이 아니라면 false이므로
+        // 더이상 가져올 포스트가 없단느 것으로 여김
+        if (res.data.length) {
+          page.current += 1;
+        }
+        // spread 연산자로 data 연속으로 immutable하게 받아오기
       })
       .catch((err: any) => {
         console.log("error");
       });
+
+    console.log("123");
   }, []);
+
+  // 다 잘되는데 이슈가 UseEffect를 axios를 호출 할때를 dependency에 넣어줘야하는데 axios를 변수에 집어넣어야함
+
+  useEffect(() => {
+    if (!observerTargetEl.current || !hasNextPage) return;
+
+    const io = new IntersectionObserver((entries, observer) => {
+      if (entries[0].isIntersecting) {
+        fetch();
+      }
+    });
+    io.observe(observerTargetEl.current);
+
+    return () => {
+      io.disconnect();
+    };
+  }, [fetch, hasNextPage]);
+
+  console.log(posts);
 
   const onBoxClick = (photoId: string) => {
     navigate(`/photos/${photoId}`);
@@ -144,7 +191,7 @@ export default function Home() {
         <Banner />
         <PictureList>
           <div>
-            {res.map((data: IGetRes) => (
+            {posts.map((data: IGetRes) => (
               <Picture onClick={() => onBoxClick(data.id)} key={data.id}>
                 <img className="picture" src={data.urls.small} alt="pic img" />
               </Picture>
@@ -152,6 +199,7 @@ export default function Home() {
           </div>
         </PictureList>
         {photoMatch ? <Modal clickedPhoto={clickedPhoto} /> : null}
+        <div ref={observerTargetEl} />
       </HomeContainer>
     </>
   );
