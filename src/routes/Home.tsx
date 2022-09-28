@@ -9,17 +9,21 @@ import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
 import Redirect from "../components/Redirect";
 
-const ACCESS_KEY = "gTwexhJ7q1_Nbwy8iAQ88sbxMYEnEcIAlxGq1kPgrJk";
+const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
-const HomeContainer = styled.section``;
+const HomeContainer = styled.section`
+  min-width: 1100px;
+  margin: 0 auto;
+`;
 
 const PictureList = styled.article`
   margin-top: 1rem;
   /* Prevent vertical gaps */
   line-height: 0;
   padding: 30px 60px;
-
+  margin: 0 auto;
+  /* 
   @media screen and (max-width: 832px) {
     -webkit-column-count: 1;
     -webkit-column-gap: 0px;
@@ -38,9 +42,9 @@ const PictureList = styled.article`
     -moz-column-gap: 0px;
     column-count: 2;
     column-gap: 0px;
-  }
+  } */
 
-  @media screen and (min-width: 1233px) and (max-width: 1632px) {
+  @media screen and (min-width: 1233px) {
     -webkit-column-count: 3;
     -webkit-column-gap: 0px;
     -moz-column-count: 2;

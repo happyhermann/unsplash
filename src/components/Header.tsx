@@ -10,7 +10,7 @@ import { Loading } from "./Loading";
 import { IGetRes } from "../routes/Home";
 import { keyword } from "../atom";
 
-const ACCESS_KEY = "gTwexhJ7q1_Nbwy8iAQ88sbxMYEnEcIAlxGq1kPgrJk";
+const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
 const SEARCH = "https://api.unsplash.com/search/photos?";
 
 const Wrapper = styled.header`
