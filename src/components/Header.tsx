@@ -10,7 +10,7 @@ import { Loading } from "./Loading";
 import { IGetRes } from "../routes/Home";
 import { keyword } from "../atom";
 
-const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
+const ACCESS_KEY = "gTwexhJ7q1_Nbwy8iAQ88sbxMYEnEcIAlxGq1kPgrJk";
 const SEARCH = "https://api.unsplash.com/search/photos?";
 
 const Wrapper = styled.header`
@@ -178,6 +178,7 @@ const Divider = styled.div`
 
 export default function Header() {
   const navigate = useNavigate();
+  const [text, setText] = useState("");
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [searched, setSearch] = useRecoilState(keyword);
@@ -208,9 +209,13 @@ export default function Header() {
 
   // console.log(searched);
 
+  const onChange = (e: any) => {
+    setText(e.target.value);
+  };
+
   const onSubmit = (e: any) => {
     e.preventDefault();
-    setInput(e.currentTarget.search.value);
+    setInput(text);
   };
 
   return (
@@ -232,6 +237,7 @@ export default function Header() {
             </div>
             <div className="search_box">
               <SearchBar
+                onChange={onChange}
                 name="search"
                 type="text"
                 placeholder="Search photos"

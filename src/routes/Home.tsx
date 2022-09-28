@@ -7,8 +7,9 @@ import Banner from "../components/Banner";
 import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
+import Redirect from "../components/Redirect";
 
-const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
+const ACCESS_KEY = "gTwexhJ7q1_Nbwy8iAQ88sbxMYEnEcIAlxGq1kPgrJk";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section``;
