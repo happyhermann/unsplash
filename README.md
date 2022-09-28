@@ -33,6 +33,7 @@
 
 #### 💻배포 주소
 > netlify : https://unsplashcloning.netlify.app/
+- 주의 : 시간당 50회만 get 요청 가능합니다, 일정 시간 지난 후 다시 접속하여주세요!
 
 
 
