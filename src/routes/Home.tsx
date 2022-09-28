@@ -8,7 +8,7 @@ import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
 
-const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
+const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section`
@@ -78,9 +78,9 @@ export interface IGetRes {
   height: number;
   urls: { large: string; regular: string; raw: string; small: string };
   color: string | null;
-  user: {
-    username: string;
-    name: string;
+  user?: {
+    username?: string;
+    name?: string;
   };
   links: {
     self: "https://api.unsplash.com/photos/eOLpJytrbsQ";
@@ -125,7 +125,7 @@ export default function Home() {
   console.log(hasNextPage);
   console.log(page);
   // get random data
-  const [res, setRes] = useState<IGetRes[]>([]);
+  // const [res, setRes] = useState<IGetRes[]>([]);
 
   const axios = require("axios");
 
@@ -141,7 +141,7 @@ export default function Home() {
         page: page,
       })
       .then((res: any) => {
-        setRes(res.data);
+        // setRes(res.data);
         setPosts((prevPosts) => [...prevPosts, ...res.data]);
         setHasNextPage(res.data.length === 10);
         // 다음 페이지 존재하는지 체크하기 위해 hasNextPage 추가
@@ -155,8 +155,6 @@ export default function Home() {
       .catch((err: any) => {
         console.log("error");
       });
-
-    console.log("123");
   }, []);
 
   // 다 잘되는데 이슈가 UseEffect를 axios를 호출 할때를 dependency에 넣어줘야하는데 axios를 변수에 집어넣어야함
@@ -186,7 +184,7 @@ export default function Home() {
 
   const clickedPhoto =
     photoMatch?.params.photoId &&
-    res?.find((photo) => photo.id === photoMatch.params.photoId);
+    posts?.find((photo) => photo.id === photoMatch.params.photoId);
 
   // usePhotos를 사용하면 해당 id와 일치하면 null을 띄우거나 아니면 true 반환?
   // 그러면 res에 있는 데이터안에 필터를 돌려서 클릭한 photoMatch의 photoId와 일치하는 것을
