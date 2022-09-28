@@ -10,7 +10,7 @@ import { Loading } from "./Loading";
 import { IGetRes } from "../routes/Home";
 import { keyword } from "../atom";
 
-const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
+const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
 const SEARCH = "https://api.unsplash.com/search/photos?";
 
 const Wrapper = styled.header`
@@ -206,7 +206,7 @@ export default function Header() {
       });
   }, [input]);
 
-  console.log(searched);
+  // console.log(searched);
 
   const onSubmit = (e: any) => {
     e.preventDefault();

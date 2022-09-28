@@ -8,7 +8,7 @@ import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
 
-const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
+const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section``;
@@ -88,7 +88,7 @@ export interface IGetRes {
 export default function Home() {
   // random image Interface
   const navigate = useNavigate();
-  const photoMatch = useMatch("/search/:photoId");
+  const photoMatch = useMatch("/photos/:photoId");
   // useMatch의 인자로 url로 넘기면 해당 url과 일치하는 경우 url 정보 반환
   // 아닐시 null을 반환
 
@@ -133,7 +133,7 @@ export default function Home() {
   // 그러면 res에 있는 데이터안에 필터를 돌려서 클릭한 photoMatch의 photoId와 일치하는 것을
   // 변수에 담아주는 것으로 마무리함
 
-  console.log(clickedPhoto);
+  // console.log(clickedPhoto);
 
   return (
     <>

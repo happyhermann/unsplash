@@ -113,8 +113,6 @@ export const Modal = ({ clickedPhoto }: any) => {
   const updated = clickedPhoto.user.updated_at.slice(0, 10);
   // 업로드 날짜 데이터
 
-  console.log(updated);
-
   return (
     <>
       <ModalBackGround>

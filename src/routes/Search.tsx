@@ -7,7 +7,7 @@ import { IGetRes } from "./Home";
 import { keyword } from "../atom";
 import { useRecoilValue } from "recoil";
 import { Loading } from "../components/Loading";
-import { useMatch } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { Modal } from "../components/Modal";
 
 // to Do
@@ -67,15 +67,16 @@ const Img = styled.img``;
 
 export default function Search() {
   // random image Interface
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const searchMatch = useMatch("/photos/:searchId");
   const searched = useRecoilValue<IGetRes[]>(keyword);
 
-  console.log(searchMatch);
+  console.log(searched);
 
   // 모달 재활용 코드
   const onBoxClick = (searchId: string) => {
-    console.log(searchId);
+    navigate(`/photos/${searchId}`);
   };
 
   const clickedPhoto =
@@ -90,7 +91,7 @@ export default function Search() {
     setTimeout(() => {
       setLoading(false);
     }, 800);
-  });
+  }, [searched]);
 
   return (
     <>
