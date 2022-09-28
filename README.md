@@ -61,10 +61,16 @@
   > Home 페이지에 접근시 (mount될 때 : useEffect 사용) 랜덤 사진 데이터를 불러오는 Unsplash Random Photo API Get으로 통신하여 useState로 데이터 set
   > 사진 리스트는 별도의 오픈 소스 없이 display : grid를 사용하여 랜덤 
   > 탭으로 사진 이동 가능하게 ul => li 시멘틱 마크업 준수
+  
+  
+#### 무한 스크롤 
+
+  > new IntersectionObserver 사용해서 구현 
+ 
    
  
  
- #### 사진 검색 기능 
+#### 사진 검색 기능 
 
  
   > 사용 API : [https://api.unsplash.com/photos/random
