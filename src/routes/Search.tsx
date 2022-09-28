@@ -7,7 +7,7 @@ import { IGetRes } from "./Home";
 import { keyword } from "../atom";
 import { useRecoilValue } from "recoil";
 import { Loading } from "../components/Loading";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import { Modal } from "../components/Modal";
 
 // to Do
@@ -68,11 +68,24 @@ const Img = styled.img``;
 export default function Search() {
   // random image Interface
   const navigate = useNavigate();
+  const location = useLocation();
+  // useLocation으로 현재 페이지의 정보를 가져옴
+  // key랑 pathname 가져오기 가능
+
+  // new URLSearchParams를 가지고  쿼리 파라미터 가져와서 유저가 서치한 키워드  h3에 painting하기
+
+  const [userInput, setUserInput] = useState("dd");
   const [loading, setLoading] = useState(true);
   const searchMatch = useMatch("/pictures/:photoId");
   const searched = useRecoilValue<IGetRes[]>(keyword);
 
-  console.log(searched);
+  useEffect(() => {
+    setUserInput(
+      location.pathname.substring(8, location.pathname.length).toUpperCase()
+    );
+  });
+
+  console.log(userInput);
 
   // 모달 재활용 코드
   const onBoxClick = (photoId: string) => {
@@ -99,6 +112,9 @@ export default function Search() {
   return (
     <>
       <Wrapper>
+        <div style={{ padding: "30px" }} className="userSearched">
+          <h3 style={{ fontSize: "35px", fontWeight: "600" }}>{userInput}</h3>
+        </div>
         {/* <Keyword>{searched.toUpperCase()}</Keyword> */}
 
         {loading ? (

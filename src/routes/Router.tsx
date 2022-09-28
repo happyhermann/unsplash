@@ -16,7 +16,10 @@ export default function Router() {
 
           <Route path="/" element={<Home />} />
           <Route path="photos/:photoId" element={<Home />} />
-          {/* modal을 라우터로 하려면 어떻게? 위에 그대로 띄우려면 어떻게? */}
+          {/* modal을 라우터로 하려면 어떻게? 위에 그대로 띄우려면 어떻게?
+            
+          
+          */}
         </Routes>
       </BrowserRouter>
     </>

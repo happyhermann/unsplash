@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "remixicon/fonts/remixicon.css";
 
@@ -128,7 +128,7 @@ export const Modal = ({ clickedPhoto }: any) => {
               <div className="uploader_details">
                 <h3 className="uploader_name">{clickedPhoto.user.name}</h3>
 
-                {clickedPhoto.user.for_hire == true ? (
+                {clickedPhoto.user.for_hire === true ? (
                   <p className="hire">Available for hire</p>
                 ) : (
                   <div className="hire">hired</div>
@@ -139,6 +139,7 @@ export const Modal = ({ clickedPhoto }: any) => {
             <div
               onClick={() => {
                 navigate(-1);
+                // 닫기 누를 시 뒤로가기
               }}
               className="exit_button"
             >
