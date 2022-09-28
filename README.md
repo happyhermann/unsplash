@@ -45,6 +45,7 @@
 #### 전역적 코드 관리 
 
 > 상태값 : 기본 react-hook (useState, useLocation, useMatch) 사용, * 서치 사진 리스트 객체 핸들링하는 1번만 recoil atom 사용
+
 > CSS 스타일링 : Styled-components로 각 라우터 페이지나 컴포넌트에서 고유의 스타일링 container, tag 생성 
 
 
