@@ -9,7 +9,7 @@ import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
 import Redirect from "../components/Redirect";
 
-const ACCESS_KEY = "TghQrx8DkcCsqHWP0ZrCe2xDKjlBu1HEkZnSpcT4qF4";
+const ACCESS_KEY = "72mNv8vQDppYRP3EML1kkf2vNKhoQVdn8DY-9ozvW1E";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section`
@@ -23,7 +23,7 @@ const PictureList = styled.ul`
   line-height: 0;
   padding: 30px 60px;
   margin: 0 auto;
-  /* 
+
   @media screen and (max-width: 832px) {
     -webkit-column-count: 1;
     -webkit-column-gap: 0px;
@@ -42,7 +42,7 @@ const PictureList = styled.ul`
     -moz-column-gap: 0px;
     column-count: 2;
     column-gap: 0px;
-  } */
+  }
 
   @media screen and (min-width: 1233px) {
     -webkit-column-count: 3;
