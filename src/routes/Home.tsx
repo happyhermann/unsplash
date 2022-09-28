@@ -8,7 +8,7 @@ import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
 
-const ACCESS_KEY = "72mNv8vQDppYRP3EML1kkf2vNKhoQVdn8DY-9ozvW1E";
+const ACCESS_KEY = "jcRY6PV2D1b1U5Ch-r_2CeI4dwNvBM4t19HVBfxH_yY";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section`
@@ -191,8 +191,9 @@ export default function Home() {
         <Banner />
         <PictureList>
           <div>
-            {posts.map((data: IGetRes) => (
+            {posts.map((data: IGetRes, index: number) => (
               <Picture onClick={() => onBoxClick(data.id)} key={data.id}>
+                {/* encounter sameKey 이슈 해결하기 위해 key에 index추가  */}
                 <img className="picture" src={data.urls.small} alt="pic img" />
               </Picture>
             ))}
