@@ -197,10 +197,11 @@ export default function Header() {
         timeout: 2000,
       })
       .then((res: any) => {
-        setLoading(true);
         setSearch(res.data.results);
-        navigate(`/search/${input}`);
         setLoading(false);
+        if (loading === false) {
+          navigate(`/search/${input}`);
+        }
       })
       .catch((err: any) => {
         console.log("error");
@@ -210,6 +211,8 @@ export default function Header() {
   // console.log(searched);
 
   const onChange = (e: any) => {
+    e.preventDefault();
+
     setText(e.target.value);
   };
 
