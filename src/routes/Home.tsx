@@ -17,7 +17,7 @@ const HomeContainer = styled.section`
   margin: 0 auto;
 `;
 
-const PictureList = styled.article`
+const PictureList = styled.ul`
   margin-top: 1rem;
   /* Prevent vertical gaps */
   line-height: 0;
