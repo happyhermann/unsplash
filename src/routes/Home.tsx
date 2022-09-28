@@ -7,9 +7,8 @@ import Banner from "../components/Banner";
 import { useNavigate, useMatch } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { Loading } from "../components/Loading";
-import Redirect from "../components/Redirect";
 
-const ACCESS_KEY = "72mNv8vQDppYRP3EML1kkf2vNKhoQVdn8DY-9ozvW1E";
+const ACCESS_KEY = "CbuSOiu8nhicErzCuY4IkeqzuaxkT4RUSMCXhLKsiFo";
 const RANDOM_PHOTO_URL = "https://api.unsplash.com/photos/random";
 
 const HomeContainer = styled.section`
@@ -124,7 +123,6 @@ export default function Home() {
   }, []);
 
   const onBoxClick = (photoId: string) => {
-    console.log(photoId);
     navigate(`/photos/${photoId}`);
   };
   // Home 사진 화면 클릭하면 띄워주는 기능

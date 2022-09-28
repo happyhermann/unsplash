@@ -138,7 +138,7 @@ export const Modal = ({ clickedPhoto }: any) => {
             </div>
             <div
               onClick={() => {
-                navigate("/");
+                navigate(-1);
               }}
               className="exit_button"
             >

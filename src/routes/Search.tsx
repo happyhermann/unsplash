@@ -69,22 +69,23 @@ export default function Search() {
   // random image Interface
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const searchMatch = useMatch("/photos/:searchId");
+  const searchMatch = useMatch("/pictures/:photoId");
   const searched = useRecoilValue<IGetRes[]>(keyword);
 
   console.log(searched);
 
   // 모달 재활용 코드
-  const onBoxClick = (searchId: string) => {
-    navigate(`/photos/${searchId}`);
+  const onBoxClick = (photoId: string) => {
+    navigate(`/pictures/${photoId}`);
   };
 
   const clickedPhoto =
-    searchMatch?.params.searchId &&
-    searched?.find((searched) => searched.id === searchMatch.params.searchId);
+    searchMatch?.params.photoId &&
+    searched?.find((searched) => searched.id === searchMatch.params.photoId);
 
   // const axios = require("axios");
 
+  console.log(`search match 콘솔찍자 ${searchMatch}`);
   console.log(searched.length);
 
   useEffect(() => {
@@ -92,6 +93,8 @@ export default function Search() {
       setLoading(false);
     }, 800);
   }, [searched]);
+
+  console.log(clickedPhoto);
 
   return (
     <>
